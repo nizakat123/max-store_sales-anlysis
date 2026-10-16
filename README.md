@@ -38,11 +38,13 @@ Perform a deep-dive analysis of 4 years (2014–2017) of retail transactional da
 ```
 Max Store Sales Analysis/
 ├── index.html                   ← Interactive dashboard (open in browser)
-├── style.css                    ← Premium dark-mode design system
-├── app.js                       ← Dashboard controller & all chart logic
-├── data.js                      ← Aggregated sales data for charts
-├── MaxStore_Sales_Analysis.sql  ← Full SQL analytics (9 sections)
-└── README.md                    ← This file
+├── style.css                    ← Premium dark-mode design system & animations
+├── app.js                       ← Dashboard controller & Chart.js renderer
+├── data.js                      ← Aggregated sales dataset & metrics
+├── insights.js                  ← AI Smart Insights & Copilot NLP engine
+├── simulator.js                 ← What-If Scenario Simulator & Forecasting model
+├── MaxStore_Sales_Analysis.sql  ← Full SQL analytics (9 sections, 40+ queries)
+└── README.md                    ← Project documentation
 ```
 
 ---
@@ -68,7 +70,7 @@ Max Store Sales Analysis/
 
 ---
 
-## 🖥️ Interactive Dashboard — 6 Sections
+## 🖥️ Interactive Dashboard — 8 Analytical Views
 
 ### 1️⃣ Overview
 - 6 animated KPI cards (Sales, Profit, Orders, Quantity, Customers, Margin)
@@ -105,6 +107,40 @@ Max Store Sales Analysis/
 - Profit margin by sub-category (color-coded: green/yellow/red)
 - Profit by ship mode
 - Discount vs Profit detailed line with break-even threshold
+
+### 7️⃣ 🤖 AI Smart Insights Panel
+- 12 dynamically generated natural-language business insights ranked by impact score (1–10)
+- Severity badges (Critical, High, Medium, Opportunity) & Category filtering
+- Click-to-expand deep dive modal with metric cards and prescriptive recommendations
+- AI Brain animated scanner & typewriter delivery
+
+### 8️⃣ ⚡ What-If Scenario Simulator & Strategic Forecasting (NEW)
+- Interactive executive sandbox modeling real-time financial sensitivity
+- **5 Dynamic Parameter Sliders**:
+  - Discount Cap on loss-making categories (0%–25%)
+  - Furniture Re-Pricing on Tables & Bookcases (0%–25%)
+  - High-Margin Technology & Copier Volume Acceleration (0%–50%)
+  - Standard Class Freight Contract Renegotiation (0%–15%)
+  - Customer VIP Retention & Repeat Purchase Lift (0%–20%)
+- Live recalculation of **Projected Sales, Projected Net Profit, Margin Expansion, and Tables Breakeven Turnaround**
+- Baseline vs Simulated bar comparison chart (`Chart.js`)
+- **4 One-Click Strategy Presets**: Fix Furniture Losses, Aggressive Scale, Margin Fortress, and Baseline Reset
+
+---
+
+## 🧠 Next-Level AI Capabilities
+
+1. **✨ Interactive AI Copilot (Natural Language Query Assistant)**
+   - Click "Ask AI Copilot" from the top navigation bar or AI Insights section
+   - Ask any conversational question (*"Why did sales drop in 2015?"*, *"How do we turn around the Tables loss?"*, *"Compare West vs Central"*)
+   - Instant response with metric highlights, executive breakdown, and action triggers
+   - **🔊 Voice Read Aloud (Text-to-Speech)**: Audio debrief powered by the browser SpeechSynthesis API
+   - **📋 One-Click Copy**: Export findings to clipboard
+
+2. **📄 Executive Board Briefing Generator**
+   - Click "Board Memo" in the top bar to synthesize a confidential, board-level executive memo
+   - Formatted for immediate executive review and includes **Print / Save as PDF** styling
+
 
 ---
 

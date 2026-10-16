@@ -70,6 +70,8 @@ const pageTitles = {
   regional:      'Regional Analysis',
   customers:     'Customers',
   profitability: 'Profitability',
+  insights:      '🤖 AI Smart Insights',
+  simulator:     '⚡ What-If Scenario Simulator',
 };
 
 function showSection(id, el) {
@@ -143,6 +145,7 @@ function renderSection(id) {
     case 'regional':      renderRegional(); break;
     case 'customers':     renderCustomers(); break;
     case 'profitability': renderProfitability(); break;
+    case 'simulator':     if (typeof initSimulator === 'function') initSimulator(); break;
   }
 }
 

@@ -50,6 +50,16 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
       Profitability
     </a>
+    <a href="#insights" class="nav-item ai-nav-item" id="nav-insights" onclick="showSection('insights', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a7 7 0 017 7c0 2.5-1.3 4.7-3.3 6L15 22H9l-.3-1H9l-.4-6.9A7 7 0 0112 2z"/><line x1="9" y1="22" x2="15" y2="22"/><line x1="9.5" y1="18" x2="14.5" y2="18"/></svg>
+      AI Insights
+      <span class="ai-badge-pill">NEW</span>
+    </a>
+    <a href="#simulator" class="nav-item sim-nav-item" id="nav-simulator" onclick="showSection('simulator', this)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      Scenario Simulator
+      <span class="sim-badge-pill">PREDICTIVE</span>
+    </a>
 
     <div class="nav-label" style="margin-top:20px">FILTERS</div>
     <div class="filter-group">
@@ -104,6 +114,12 @@
       <div class="topbar-title" id="pageTitle">Overview</div>
     </div>
     <div class="topbar-right">
+      <button class="topbar-ai-btn" onclick="openAICopilot()" title="Ask AI anything about your data">
+        <span class="topbar-ai-sparkle">✨</span> Ask AI Copilot
+      </button>
+      <button class="topbar-brief-btn" onclick="openExecutiveBriefing()" title="Generate Confidential Board Briefing">
+        📄 Board Memo
+      </button>
       <div class="topbar-badge">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         Last updated: Oct 2026
@@ -523,12 +539,268 @@
     </div>
   </section>
 
+  <!-- ═══ SECTION: AI SMART INSIGHTS ════════════════════════════════════════ -->
+  <section class="section" id="section-insights">
+    <div class="section-header" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px">
+      <div>
+        <h1>AI Smart Insights</h1>
+        <p>Automatically generated business intelligence from your sales data — ranked by impact</p>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap">
+        <button class="copilot-launch-btn" onclick="openAICopilot()">
+          <span>✨</span> Ask AI Copilot
+        </button>
+        <button class="briefing-launch-btn" onclick="openExecutiveBriefing()">
+          <span>📄</span> Board Memo
+        </button>
+      </div>
+    </div>
+
+    <!-- INSIGHT CONTROLS -->
+    <div class="insights-controls">
+      <div class="insights-tabs" id="insightsTabs">
+        <button class="itab active" data-cat="all"     onclick="filterInsights('all',    this)">All Insights</button>
+        <button class="itab"        data-cat="growth"  onclick="filterInsights('growth',  this)">📈 Growth</button>
+        <button class="itab"        data-cat="risk"    onclick="filterInsights('risk',    this)">⚠️ Risk</button>
+        <button class="itab"        data-cat="product" onclick="filterInsights('product', this)">📦 Product</button>
+        <button class="itab"        data-cat="customer"onclick="filterInsights('customer',this)">👥 Customer</button>
+        <button class="itab"        data-cat="region"  onclick="filterInsights('region',  this)">🌍 Regional</button>
+      </div>
+      <button class="regenerate-btn" id="regenerateBtn" onclick="runInsightsEngine()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+        Regenerate
+      </button>
+    </div>
+
+    <!-- INSIGHT SUMMARY BAR -->
+    <div class="insights-summary" id="insightsSummary"></div>
+
+    <!-- MAIN INSIGHTS GRID -->
+    <div class="insights-grid" id="insightsGrid"></div>
+
+    <!-- INSIGHT DETAIL MODAL -->
+    <div class="insight-modal-overlay" id="insightModalOverlay" onclick="closeInsightModal()">
+      <div class="insight-modal" id="insightModal" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeInsightModal()">&times;</button>
+        <div class="modal-content" id="modalContent"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION: WHAT-IF SCENARIO SIMULATOR ═══════════════════════════════ -->
+  <section class="section" id="section-simulator">
+    <div class="section-header" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:16px">
+      <div>
+        <h1>What-If Scenario Simulator & Strategic Forecasting</h1>
+        <p>Interactive executive decision sandbox — model price changes, discount caps, and growth policies in real-time</p>
+      </div>
+      <div class="sim-status-pill">
+        <span class="sim-pulse-dot"></span> Predictive Engine Active
+      </div>
+    </div>
+
+    <!-- PRESET STRATEGIC SCENARIOS -->
+    <div class="sim-presets-bar">
+      <span class="sim-presets-label">⚡ Strategic Presets:</span>
+      <button class="sim-preset-btn active" onclick="applySimPreset('baseline', this)">Historical Baseline</button>
+      <button class="sim-preset-btn" onclick="applySimPreset('turnaround', this)">🛠️ Fix Furniture Losses</button>
+      <button class="sim-preset-btn" onclick="applySimPreset('aggressive', this)">🚀 Tech & VIP Scale</button>
+      <button class="sim-preset-btn" onclick="applySimPreset('margin', this)">🛡️ Margin Fortress</button>
+    </div>
+
+    <!-- SIMULATED PROJECTION KPI CARDS -->
+    <div class="kpi-grid">
+      <div class="kpi-card" style="--accent:#6366f1">
+        <div class="kpi-icon" style="background:rgba(99,102,241,.15)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2.2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+        </div>
+        <div class="kpi-content">
+          <div class="kpi-label">Projected Annual Sales</div>
+          <div class="kpi-value" id="sim-metric-sales">$2.30M</div>
+          <div class="sim-kpi-sub" id="sim-delta-sales">Baseline ($2.30M)</div>
+        </div>
+      </div>
+
+      <div class="kpi-card" style="--accent:#10b981">
+        <div class="kpi-icon" style="background:rgba(16,185,129,.15)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="kpi-content">
+          <div class="kpi-label">Projected Net Profit</div>
+          <div class="kpi-value" id="sim-metric-profit" style="color:#10b981">$286.4K</div>
+          <div class="sim-kpi-sub" id="sim-delta-profit">+0 (Baseline $286.4K)</div>
+        </div>
+      </div>
+
+      <div class="kpi-card" style="--accent:#8b5cf6">
+        <div class="kpi-icon" style="background:rgba(139,92,246,.15)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+        </div>
+        <div class="kpi-content">
+          <div class="kpi-label">Projected Operating Margin</div>
+          <div class="kpi-value" id="sim-metric-margin">12.47%</div>
+          <div class="sim-kpi-sub" id="sim-delta-margin">+0.00% pts vs Baseline</div>
+        </div>
+      </div>
+
+      <div class="kpi-card" style="--accent:#ec4899">
+        <div class="kpi-icon" style="background:rgba(236,72,153,.15)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+        </div>
+        <div class="kpi-content">
+          <div class="kpi-label">Tables Category Status</div>
+          <div class="kpi-value" id="sim-metric-tables">-$17.7K</div>
+          <div class="sim-kpi-sub" id="sim-delta-tables">Baseline Loss: -$17,725</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN SIMULATOR WORKBENCH (SLIDERS + VERDICT + CHART) -->
+    <div class="sim-workbench-grid">
+      
+      <!-- CONTROLS COLUMN (5 PARAMETER SLIDERS) -->
+      <div class="sim-sliders-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Strategic Control Levers</div>
+            <div class="chart-sub">Drag sliders to test policy impacts on business outcomes</div>
+          </div>
+        </div>
+
+        <div class="sim-slider-group">
+          <div class="sim-slider-meta">
+            <span class="sim-slider-name">1. Discount Cap on Troubled Categories</span>
+            <span class="sim-slider-badge" id="val-discountCap">0%</span>
+          </div>
+          <input type="range" class="sim-range" id="slider-discountCap" min="0" max="25" step="1" value="0" oninput="onSimSliderChange('discountCap', this.value)">
+          <div class="sim-slider-hint">Caps promotional discounts. Current average discount on loss-making Tables is 32%.</div>
+        </div>
+
+        <div class="sim-slider-group">
+          <div class="sim-slider-meta">
+            <span class="sim-slider-name">2. Tables & Furniture Re-Pricing</span>
+            <span class="sim-slider-badge" id="val-furniturePrice">+0%</span>
+          </div>
+          <input type="range" class="sim-range" id="slider-furniturePrice" min="0" max="25" step="1" value="0" oninput="onSimSliderChange('furniturePrice', this.value)">
+          <div class="sim-slider-hint">Price adjustment on Tables/Bookcases to restore margin above break-even.</div>
+        </div>
+
+        <div class="sim-slider-group">
+          <div class="sim-slider-meta">
+            <span class="sim-slider-name">3. Technology & Copier Volume Boost</span>
+            <span class="sim-slider-badge" id="val-techPush">+0%</span>
+          </div>
+          <input type="range" class="sim-range" id="slider-techPush" min="0" max="50" step="5" value="0" oninput="onSimSliderChange('techPush', this.value)">
+          <div class="sim-slider-hint">Commercial expansion in highest-margin segment (Copiers 37.2%, Technology 17.4%).</div>
+        </div>
+
+        <div class="sim-slider-group">
+          <div class="sim-slider-meta">
+            <span class="sim-slider-name">4. Standard Class Freight Rate Renegotiation</span>
+            <span class="sim-slider-badge" id="val-shippingSavings">0%</span>
+          </div>
+          <input type="range" class="sim-range" id="slider-shippingSavings" min="0" max="15" step="1" value="0" oninput="onSimSliderChange('shippingSavings', this.value)">
+          <div class="sim-slider-hint">Carrier contract cost savings on Standard Class (handles 59.7% of all orders).</div>
+        </div>
+
+        <div class="sim-slider-group">
+          <div class="sim-slider-meta">
+            <span class="sim-slider-name">5. Customer VIP Retention & Repeat Purchase Lift</span>
+            <span class="sim-slider-badge" id="val-retentionLift">+0%</span>
+          </div>
+          <input type="range" class="sim-range" id="slider-retentionLift" min="0" max="20" step="2" value="0" oninput="onSimSliderChange('retentionLift', this.value)">
+          <div class="sim-slider-hint">Incentivizes repeat orders from the 249 high-CLV accounts (6+ orders).</div>
+        </div>
+      </div>
+
+      <!-- VISUALIZATION & VERDICT COLUMN -->
+      <div class="sim-results-column">
+        
+        <!-- DUAL COMPARISON CHART -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <div class="chart-title">Baseline vs Simulated Profit Comparison</div>
+              <div class="chart-sub">Category-level net profit impact ($ USD)</div>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="simComparisonChart"></canvas>
+          </div>
+        </div>
+
+        <!-- AI STRATEGY VERDICT CARD -->
+        <div class="sim-verdict-card" id="simStrategyVerdict">
+          <!-- Dynamically populated by updateStrategyVerdict() -->
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
 </main>
+
+<!-- ─── AI COPILOT MODAL (NATURAL LANGUAGE QUERY ASSISTANT) ──── -->
+<div class="copilot-modal-overlay" id="copilotModalOverlay" onclick="closeAICopilot()">
+  <div class="copilot-modal" id="copilotModal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeAICopilot()">&times;</button>
+    
+    <div class="copilot-modal-header">
+      <div class="copilot-brand-icon">✨</div>
+      <div>
+        <div class="copilot-title">Max Store AI Copilot</div>
+        <div class="copilot-subtitle">Ask any question across sales, margins, products, regions & customers</div>
+      </div>
+    </div>
+
+    <!-- SUGGESTED PROMPT CHIPS -->
+    <div class="copilot-chips-wrap">
+      <span class="copilot-chip-label">Quick Prompts:</span>
+      <button class="copilot-chip" onclick="askCopilot('How do we fix the Tables loss?')">🛠️ Turn around Tables loss</button>
+      <button class="copilot-chip" onclick="askCopilot('Why is Copiers our best product?')">🖨️ Why are Copiers high margin?</button>
+      <button class="copilot-chip" onclick="askCopilot('Why is Central region lagging West?')">🌍 West vs Central margin gap</button>
+      <button class="copilot-chip" onclick="askCopilot('What is the 30% discount cliff?')">📉 30% discount cliff proof</button>
+      <button class="copilot-chip" onclick="askCopilot('What is our 2018 growth forecast?')">📈 FY2018 growth forecast</button>
+      <button class="copilot-chip" onclick="askCopilot('Who are our loyal customers?')">⭐ VIP Customer retention</button>
+    </div>
+
+    <!-- QUERY INPUT BAR -->
+    <form class="copilot-input-form" onsubmit="event.preventDefault(); askCopilot();">
+      <input type="text" id="copilotQueryInput" class="copilot-input" placeholder="Type a business question... (e.g. 'Why did sales drop in 2015?' or 'How to maximize profit?')">
+      <button type="submit" class="copilot-submit-btn">
+        <span>Ask Copilot</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </form>
+
+    <!-- RESPONSE CONTAINER -->
+    <div class="copilot-response-container" id="copilotResponseBox">
+      <div class="copilot-empty-state">
+        <div style="font-size:36px; margin-bottom:12px">🤖</div>
+        <div style="font-weight:600; color:var(--text-primary); margin-bottom:6px">Enterprise Sales Intelligence at Your Fingertips</div>
+        <div style="font-size:13px; color:var(--text-muted); max-width:440px; margin:0 auto">
+          Click any of the suggested prompt chips above or ask a specific analytical question about store profitability, regional variance, customer loyalty, or product mix.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── EXECUTIVE BOARD BRIEFING MODAL ───────────────────────── -->
+<div class="briefing-modal-overlay" id="briefingModalOverlay" onclick="closeExecutiveBriefing()">
+  <div class="briefing-modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeExecutiveBriefing()">&times;</button>
+    <div id="briefingModalContent"></div>
+  </div>
+</div>
 
 <!-- ─── TOOLTIP ──────────────────────────────────────────────── -->
 <div class="custom-tooltip" id="tooltip" style="display:none"></div>
 
 <script src="data.js"></script>
+<script src="insights.js"></script>
+<script src="simulator.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
